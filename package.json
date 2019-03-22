@@ -1,6 +1,6 @@
 {
   "name": "blockchain-viewer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -49,5 +49,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "https://blockchain.info"
 }

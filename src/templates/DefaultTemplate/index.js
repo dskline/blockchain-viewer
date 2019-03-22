@@ -1,19 +1,28 @@
 // @flow
 import React from 'react'
+import Grid from '@material-ui/core/Grid'
+import withStyles from '@material-ui/core/styles/withStyles'
+
 import NavigationBar from 'src/components/NavigationBar'
 
+import styles from './styles'
+
 type Props = {
-  children: Node
+  children: Node,
+  classes: Object
 }
-export default class DefaultTemplate extends React.Component<Props> {
+class DefaultTemplate extends React.Component<Props> {
   render () {
     return (
       <>
         <NavigationBar />
-        <div style={{ padding: '2rem' }}>
-          { this.props.children }
-        </div>
+        <Grid container justify='center' className={this.props.classes.body}>
+          <Grid item xs={11} sm={10} md={10} lg={8} xl={8}>
+            { this.props.children }
+          </Grid>
+        </Grid>
       </>
     )
   }
 }
+export default withStyles(styles)(DefaultTemplate)
