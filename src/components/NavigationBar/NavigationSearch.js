@@ -14,9 +14,7 @@ type Props = {
   id: string,
   searchExpanded: boolean
 }
-class NavigationSearch extends React.Component<Props, State> {
-
-  state = {}
+class NavigationSearch extends React.Component<Props> {
 
   componentDidUpdate (prevProps: Props): void {
     // If the search has just been toggled, focus the search bar
