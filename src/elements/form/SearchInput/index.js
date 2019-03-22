@@ -6,13 +6,23 @@ import InputBase from '@material-ui/core/InputBase'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 
+import { onEnterKeyPress } from 'src/utility/accessibility/AccessibilityFunctions'
+
 import styles from './styles'
 
 type Props = {
   classes: Object,
+  onSubmit: (string) => void,
   placeholder: string
 }
-class SearchInput extends React.Component<Props> {
+type State = {
+  inputValue: string
+}
+class SearchInput extends React.Component<Props, State> {
+
+  state = {
+    inputValue: ''
+  }
 
   render () {
     const { classes } = this.props
@@ -22,10 +32,14 @@ class SearchInput extends React.Component<Props> {
         <InputBase
           className={classes.input}
           placeholder={this.props.placeholder}
+          value={this.state.inputValue}
+          onChange={event => { this.setState({ inputValue: event.target.value }) }}
+          onKeyPress={onEnterKeyPress(() => { this.props.onSubmit(this.state.inputValue) })}
         />
         <IconButton
           className={classes.iconButton}
           aria-label='Search'
+          onClick={() => { this.props.onSubmit(this.state.inputValue) }}
         >
           <SearchIcon />
         </IconButton>
