@@ -29,22 +29,60 @@ const tableRow = (title, value) => (
 
 type Props = {
   classes: Object,
+  data?: TransactionType,
   hash: string
 }
 type State = {
   apiError: boolean,
+  isLoading: boolean,
   transactionData?: TransactionType
 }
+const initialState = ({ data }) => ({
+  apiError: false,
+  isLoading: false,
+  transactionData: data
+})
 class TransactionCard extends React.Component<Props, State> {
 
-  state = {
-    apiError: false
+  constructor (props) {
+    super(props)
+    this.state = initialState(props)
   }
 
   componentDidMount (): void {
-    new BlockchainApi().getTransactionDetails(this.props.hash)
-      .catch(() => { this.setState({ apiError: true }) })
-      .then(result => { this.setState({ transactionData: result }) })
+    if (!this.props.data) {
+      this.fetchTransactionData()
+    }
+  }
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if (!prevState.transactionData || (prevState.transactionData.hash !== nextProps.hash)) {
+      return initialState(nextProps)
+    }
+    return null
+  }
+
+  componentDidUpdate (prevProps: Props): void {
+    if (!this.props.data && prevProps.hash !== this.props.hash) {
+      this.fetchTransactionData()
+    }
+  }
+
+  fetchTransactionData = () => {
+    if (!this.state.isLoading) {
+      new BlockchainApi().getTransactionDetails(this.props.hash)
+        .catch(() => {
+          this.setState({
+            apiError: true,
+            isLoading: false
+          })
+        })
+        .then(result => {
+          this.setState({ transactionData: result })
+        })
+
+      this.setState({ isLoading: true })
+    }
   }
 
   render () {
@@ -54,7 +92,8 @@ class TransactionCard extends React.Component<Props, State> {
     return (
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.title} color='textSecondary' gutterBottom>
+          <Typography className={classes.title}>Hash</Typography>
+          <Typography className={classes.hash} color='textSecondary'>
             {this.props.hash}
           </Typography>
           {
@@ -63,20 +102,21 @@ class TransactionCard extends React.Component<Props, State> {
                 <TableBody>
                   { tableRow('Created Date', convertUnixToDateTime(data.time)) }
                   { tableRow('Transaction Index', data.tx_index) }
-                  { tableRow('Size', data.size) }
+                  { tableRow('Size', data.size + ' (bytes)') }
                   { tableRow('Block Index', data.block_index) }
                   { tableRow('Block Height', data.block_height) }
                 </TableBody>
               </Table>
             ) : (
               <Grid container justify='center' alignItems='center' className={classes.loadingContainer}>
-                { this.state.apiError ? (
+                { this.state.apiError &&
                   <Typography className={classes.error}>
                     Oops! There was an error retrieving transaction details for this hash.
                   </Typography>
-                ) : (
+                }
+                { !data && !this.state.apiError &&
                   <CircularProgress size={60} />
-                )}
+                }
               </Grid>
             )
           }
