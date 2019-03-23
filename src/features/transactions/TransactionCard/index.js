@@ -38,21 +38,30 @@ type State = {
 }
 class TransactionCard extends React.Component<Props, State> {
 
-  state = {
-    apiError: false
+  constructor (props) {
+    super(props)
+    this.state = this.initializeState()
   }
 
-  constructor (props: Props) {
-    super(props)
-    if (props.data) {
-      this.state.transactionData = props.data
+  componentDidUpdate (prevProps: Props): void {
+    if (prevProps.hash !== this.props.hash) {
+      this.setState(this.initializeState())
     }
   }
 
-  componentDidMount (): void {
-    new BlockchainApi().getTransactionDetails(this.props.hash)
-      .catch(() => { this.setState({ apiError: true }) })
-      .then(result => { this.setState({ transactionData: result }) })
+  initializeState = () => {
+    let state = {
+      apiError: false
+    }
+    if (this.props.data) {
+      state.transactionData = this.props.data
+    }
+    else {
+      new BlockchainApi().getTransactionDetails(this.props.hash)
+        .catch(() => { this.setState({ apiError: true }) })
+        .then(result => { this.setState({ transactionData: result }) })
+    }
+    return state
   }
 
   render () {
@@ -62,7 +71,8 @@ class TransactionCard extends React.Component<Props, State> {
     return (
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.title} color='textSecondary' gutterBottom>
+          <Typography className={classes.title}>Hash</Typography>
+          <Typography className={classes.hash} color='textSecondary'>
             {this.props.hash}
           </Typography>
           {
@@ -71,7 +81,7 @@ class TransactionCard extends React.Component<Props, State> {
                 <TableBody>
                   { tableRow('Created Date', convertUnixToDateTime(data.time)) }
                   { tableRow('Transaction Index', data.tx_index) }
-                  { tableRow('Size', data.size) }
+                  { tableRow('Size', data.size + ' (bytes)') }
                   { tableRow('Block Index', data.block_index) }
                   { tableRow('Block Height', data.block_height) }
                 </TableBody>
