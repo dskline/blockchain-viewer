@@ -9,6 +9,8 @@ import CloseSearchIcon from 'mdi-material-ui/MagnifyClose'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 
+import Link from 'src/elements/Link'
+
 import NavigationSearch from './NavigationSearch'
 import styles from './styles'
 
@@ -40,7 +42,9 @@ class NavigationBar extends React.Component<Props, State> {
           })}
         >
           <Typography variant='h6' color='inherit' noWrap>
-            Blockchain Viewer
+            <Link url='/'>
+              Blockchain Viewer
+            </Link>
           </Typography>
           <div className={classes.grow} />
           <IconButton
