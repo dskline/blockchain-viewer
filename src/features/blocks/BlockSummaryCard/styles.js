@@ -11,9 +11,10 @@ const styles = theme => ({
     fontWeight: '500',
     padding: '1.5rem 0 .4rem'
   },
-  table: {
+  tableContainer: {
     maxWidth: 400,
     flexGrow: 1,
+    paddingRight: '1rem !important',
     '& tr:nth-of-type(odd)': {
       backgroundColor: '#fcfcfc'
     }

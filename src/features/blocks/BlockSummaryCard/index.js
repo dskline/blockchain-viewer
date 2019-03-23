@@ -42,12 +42,12 @@ class BlockSummaryCard extends React.Component<Props> {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Grid container justify='flex-start' spacing={32}>
-            <Grid item md={5}>
+          <Grid container justify='flex-start' spacing={16}>
+            <Grid item md={5} className={classes.tableContainer}>
               <Typography className={classes.tableTitle}>
                 Summary
               </Typography>
-              <Table className={classes.table}>
+              <Table>
                 <TableBody>
                   { tableRow('Number of Transactions', data.n_tx) }
                   { tableRow('Timestamp', convertUnixToDateTime(data.time)) }
@@ -71,7 +71,9 @@ class BlockSummaryCard extends React.Component<Props> {
                 </Link>
               </Typography>
 
-              <Typography className={classes.tableTitle}>Next Block</Typography>
+              { data.next_block.length > 0 &&
+                <Typography className={classes.tableTitle}>Next Block</Typography>
+              }
               <Typography color='primary' className={classes.blockHash}>
                 { data.next_block.map(hash => (
                   <Link
