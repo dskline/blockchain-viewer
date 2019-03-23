@@ -29,6 +29,7 @@ const tableRow = (title, value) => (
 
 type Props = {
   classes: Object,
+  data?: TransactionType,
   hash: string
 }
 type State = {
@@ -39,6 +40,13 @@ class TransactionCard extends React.Component<Props, State> {
 
   state = {
     apiError: false
+  }
+
+  constructor (props: Props) {
+    super(props)
+    if (props.data) {
+      this.state.transactionData = props.data
+    }
   }
 
   componentDidMount (): void {
