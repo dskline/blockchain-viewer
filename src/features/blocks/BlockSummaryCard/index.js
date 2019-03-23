@@ -42,7 +42,7 @@ class BlockSummaryCard extends React.Component<Props> {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Grid container justify='flex-start' spacing={16}>
+          <Grid container justify='flex-start' spacing={32}>
             <Grid item md={5}>
               <Typography className={classes.tableTitle}>
                 Summary

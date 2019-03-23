@@ -17,7 +17,7 @@ class DefaultTemplate extends React.Component<Props> {
       <>
         <NavigationBar />
         <Grid container justify='center' className={this.props.classes.body}>
-          <Grid item xs={11} sm={10} xl={8}>
+          <Grid item xs={11} sm={10} lg={8}>
             { this.props.children }
           </Grid>
         </Grid>
