@@ -17,35 +17,62 @@ import type { BlockType } from '../types'
 
 type Props = {
   classes: Object,
+  data?: BlockType,
   hash: string
 }
 type State = {
   apiError: boolean,
-  blockData?: BlockType,
+  blockData: ?BlockType,
+  isLoading: boolean,
   tabIndex: number
 }
+const initialState = ({ data }) => ({
+  apiError: false,
+  blockData: data,
+  isLoading: false,
+  tabIndex: 0
+})
 class BlockDashboard extends React.Component<Props, State> {
 
-  state = {
-    apiError: false,
-    tabIndex: 0
+  constructor (props) {
+    super(props)
+    this.state = initialState(props)
   }
 
   componentDidMount (): void {
-    this.fetchBlockDetails()
+    if (!this.props.data) {
+      this.fetchBlockDetails()
+    }
+  }
+
+  static getDerivedStateFromProps (nextProps: Props, prevState: State) {
+    if (!prevState.blockData || prevState.blockData.hash !== nextProps.hash) {
+      return initialState(nextProps)
+    }
+    return null
   }
 
   componentDidUpdate (prevProps: Props): void {
     if (prevProps.hash !== this.props.hash) {
-      this.setState({ blockData: undefined }) // eslint-disable-line react/no-did-update-set-state
       this.fetchBlockDetails()
     }
   }
 
   fetchBlockDetails = () => {
-    new BlockchainApi().getBlockDetails(this.props.hash)
-      .catch(() => { this.setState({ apiError: true }) })
-      .then(result => { this.setState({ blockData: result }) })
+    if (!this.state.isLoading) {
+      new BlockchainApi().getBlockDetails(this.props.hash)
+        .catch(() => {
+          this.setState({
+            apiError: true,
+            isLoading: false
+          })
+        })
+        .then(result => {
+          this.setState({ blockData: result })
+        })
+
+      this.setState({ isLoading: true })
+    }
   }
 
   render () {
@@ -70,16 +97,16 @@ class BlockDashboard extends React.Component<Props, State> {
         <Grid container className={this.props.classes.tabContainer}>
           { this.state.tabIndex === 0 && data && <BlockSummaryCard blockData={data} /> }
           { this.state.tabIndex === 1 && data && <TransactionListView transactions={data.tx} /> }
-          { this.state.apiError && (
+          { !data && this.state.apiError &&
             <Typography>
               Oops! There was an error retrieving block details for this hash.
             </Typography>
-          ) }
-          { !data && !this.state.apiError && (
+          }
+          { !data && !this.state.apiError &&
             <Grid container justify='center' alignItems='center'>
               <CircularProgress size={60} />
             </Grid>
-          ) }
+          }
         </Grid>
       </>
     )

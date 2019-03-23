@@ -2,7 +2,7 @@ const tableHeight = 240
 
 const styles = theme => ({
   card: {
-    height: 370,
+    height: 400,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between'

@@ -34,34 +34,55 @@ type Props = {
 }
 type State = {
   apiError: boolean,
+  isLoading: boolean,
   transactionData?: TransactionType
 }
+const initialState = ({ data }) => ({
+  apiError: false,
+  isLoading: false,
+  transactionData: data
+})
 class TransactionCard extends React.Component<Props, State> {
 
   constructor (props) {
     super(props)
-    this.state = this.initializeState()
+    this.state = initialState(props)
+  }
+
+  componentDidMount (): void {
+    if (!this.props.data) {
+      this.fetchTransactionData()
+    }
+  }
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if (!prevState.transactionData || (prevState.transactionData.hash !== nextProps.hash)) {
+      return initialState(nextProps)
+    }
+    return null
   }
 
   componentDidUpdate (prevProps: Props): void {
-    if (prevProps.hash !== this.props.hash) {
-      this.setState(this.initializeState())
+    if (!this.props.data && prevProps.hash !== this.props.hash) {
+      this.fetchTransactionData()
     }
   }
 
-  initializeState = () => {
-    let state = {
-      apiError: false
-    }
-    if (this.props.data) {
-      state.transactionData = this.props.data
-    }
-    else {
+  fetchTransactionData = () => {
+    if (!this.state.isLoading) {
       new BlockchainApi().getTransactionDetails(this.props.hash)
-        .catch(() => { this.setState({ apiError: true }) })
-        .then(result => { this.setState({ transactionData: result }) })
+        .catch(() => {
+          this.setState({
+            apiError: true,
+            isLoading: false
+          })
+        })
+        .then(result => {
+          this.setState({ transactionData: result })
+        })
+
+      this.setState({ isLoading: true })
     }
-    return state
   }
 
   render () {
@@ -88,13 +109,14 @@ class TransactionCard extends React.Component<Props, State> {
               </Table>
             ) : (
               <Grid container justify='center' alignItems='center' className={classes.loadingContainer}>
-                { this.state.apiError ? (
+                { this.state.apiError &&
                   <Typography className={classes.error}>
                     Oops! There was an error retrieving transaction details for this hash.
                   </Typography>
-                ) : (
+                }
+                { !data && !this.state.apiError &&
                   <CircularProgress size={60} />
-                )}
+                }
               </Grid>
             )
           }

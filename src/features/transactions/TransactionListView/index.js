@@ -26,12 +26,13 @@ type Props = {
 }
 type State = {
   page: number,
-  selectedTransaction?: TransactionType
+  selectedTransaction: ?TransactionType
 }
 class TransactionListView extends React.Component<Props, State> {
 
   state = {
-    page: 0
+    page: 0,
+    selectedTransaction: undefined
   }
 
   handleTransactionSelected = (transaction) => {
@@ -76,8 +77,9 @@ class TransactionListView extends React.Component<Props, State> {
                         <TableRow>
                           <TableCell className={classes.transactionDetails}>
                             <TransactionCard
-                              data={this.state.selectedTransaction}
-                              hash={this.state.selectedTransaction.hash}
+                              data={selectedTransaction}
+                              // $FlowFixMe (flow should be able to deduce that selectedTransaction is defined here)
+                              hash={selectedTransaction.hash}
                             />
                           </TableCell>
                         </TableRow>

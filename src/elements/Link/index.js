@@ -7,7 +7,7 @@ import { isIE } from 'src/utility/browser/CompatFunctions'
 
 type Props = {
   children: Node,
-  style: Object,
+  style?: Object,
   url: string
 }
 export default class Link extends React.Component<Props> {
