@@ -2,7 +2,7 @@ const tableHeight = 240
 
 const styles = theme => ({
   card: {
-    height: 370,
+    height: 400,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between'
@@ -14,9 +14,13 @@ const styles = theme => ({
     flexGrow: 1
   },
   title: {
-    fontSize: 14,
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  hash: {
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    paddingBottom: '2rem'
   },
   error: {
     fontSize: 14,
