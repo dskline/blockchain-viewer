@@ -15,4 +15,8 @@ export default class BlockchainApi extends BaseJsonApi {
   getBlockDetails (hash: string) {
     return this.sendRequest('/rawblock/' + hash)
   }
+
+  getLatestBlock () {
+    return this.sendRequest('/latestblock')
+  }
 }

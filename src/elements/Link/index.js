@@ -14,7 +14,7 @@ export default class Link extends React.Component<Props> {
 
   render () {
     const { children, url, ...attrs } = this.props
-    const styleOverride = { color: 'inherit' }
+    const styleOverride = { color: 'inherit', textDecoration: 'none' }
 
     return (
       url.startsWith('/') ? (
