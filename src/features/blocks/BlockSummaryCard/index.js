@@ -73,12 +73,15 @@ class BlockSummaryCard extends React.Component<Props> {
 
               <Typography className={classes.tableTitle}>Next Block</Typography>
               <Typography color='primary' className={classes.blockHash}>
-                <Link
-                  url={PageDirectory.BLOCK_DETAILS_PAGE.path.replace(':id', data.next_block)}
-                  onClick={() => { this.context.updateHash(data.next_block) }}
-                >
-                  { data.next_block }
-                </Link>
+                { data.next_block.map(hash => (
+                  <Link
+                    key={hash}
+                    url={PageDirectory.BLOCK_DETAILS_PAGE.path.replace(':id', hash)}
+                    onClick={() => { this.context.updateHash(hash) }}
+                  >
+                    { hash }
+                  </Link>
+                ))}
               </Typography>
             </Grid>
           </Grid>
