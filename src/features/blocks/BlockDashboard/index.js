@@ -53,7 +53,7 @@ class BlockDashboard extends React.Component<Props, State> {
     return (
       <>
         <Typography variant='h6' className={this.props.classes.title}>
-          Block { data ? `#${data.block_index}` : '' }
+          { data ? `Block #${data.block_index}` : 'Loading block...' }
         </Typography>
         <Paper>
           <Tabs
