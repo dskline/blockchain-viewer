@@ -10,7 +10,7 @@ export default class BaseJsonApi extends BaseApi {
     if (!baseOptions.headers) {
       baseOptions.headers = {}
     }
-    baseOptions.headers['Content-Type'] = 'application/json'
+    baseOptions.headers['Accept'] = 'application/json'
     super(baseUrl, baseOptions)
   }
 
