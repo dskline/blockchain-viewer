@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "8315b904c9937a1c1829",
-    "url": "/blockchain-viewer/static/js/main.4256cbb2.chunk.js"
+    "revision": "3cd1b305188bae95825f",
+    "url": "/blockchain-viewer/static/js/main.c45bd3e2.chunk.js"
   },
   {
     "revision": "8030cda6a7bfaf75094c",
@@ -12,7 +12,7 @@ self.__precacheManifest = [
     "url": "/blockchain-viewer/static/js/2.a478978a.chunk.js"
   },
   {
-    "revision": "31e2aec114fe248347a36d847123e9cd",
+    "revision": "6861e895f1d2eef901b67c2ce80ba426",
     "url": "/blockchain-viewer/index.html"
   }
 ];
