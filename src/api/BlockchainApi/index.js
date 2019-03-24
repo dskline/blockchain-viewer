@@ -8,6 +8,10 @@ export default class BlockchainApi extends BaseJsonApi {
     super(ApiDirectory.BLOCKCHAIN_API.url)
   }
 
+  sendRequest (url: string, options: Object = {}) {
+    return super.sendRequest(url + '?cors=true', options)
+  }
+
   getTransactionDetails (hash: string) {
     return this.sendRequest('/rawtx/' + hash)
   }

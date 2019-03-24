@@ -1,7 +1,7 @@
 {
   "name": "blockchain-viewer",
-  "version": "0.5.1",
-  "homepage": "https://dskline.github.io/blockchain-viewer",
+  "version": "0.5.2",
+  "homepage": "https://blockchain.spencerkline.com",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
