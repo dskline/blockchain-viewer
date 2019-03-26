@@ -44,6 +44,7 @@ class NavigationSearch extends React.Component<Props> {
         <SearchInput
           placeholder='Search by block/transaction hash'
           onSubmit={this.onSubmit}
+          inputProps={{ tabIndex: -1 }}
         />
       </div>
     )

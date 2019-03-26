@@ -2,6 +2,7 @@
 import React from 'react'
 import type { Node } from 'react'
 import { NavLink as InternalLink } from 'react-router-dom'
+import MaterialLink from '@material-ui/core/Link'
 
 import { isIE } from 'src/utility/browser/CompatFunctions'
 
@@ -22,9 +23,15 @@ export default class Link extends React.Component<Props> {
           {children}
         </InternalLink>
       ) : (
-        <a href={url} target={isIE ? '_self' : '_blank'} rel='noopener' {...attrs} style={styleOverride}>
+        <MaterialLink
+          href={url}
+          rel='noopener'
+          target={isIE ? '_self' : '_blank'}
+          style={styleOverride}
+          {...attrs}
+        >
           {children}
-        </a>
+        </MaterialLink>
       )
     )
   }

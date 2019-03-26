@@ -4,6 +4,9 @@ export const navbarTransitionMs = 300
 const styles = theme => ({
   root: {
     width: '100%',
+    '& a': {
+      color: 'white'
+    }
   },
   container: {
     overflowY: 'hidden',
@@ -20,6 +23,9 @@ const styles = theme => ({
       height: navbarHeight
     }
   },
+  logo: {
+    color: 'white'
+  },
   grow: {
     flexGrow: 1
   },
@@ -28,6 +34,15 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+  },
+  githubButton: {
+    paddingRight: '1rem',
+    '& svg': {
+      fill: 'white'
+    },
+    '&[x-placement*="bottom"] $arrow': {
+      marginTop: '-4rem'
+    }
   },
   mobileSearchButton: {
     display: 'block',
@@ -42,7 +57,13 @@ const styles = theme => ({
     display: 'block',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '350px'
+      width: '300px'
+    },
+    '& button': {
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'block'
+      },
     }
   }
 })

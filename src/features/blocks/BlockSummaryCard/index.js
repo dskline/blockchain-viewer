@@ -93,9 +93,10 @@ class BlockSummaryCard extends React.Component<Props> {
             <Button
               size='small'
               color='primary'
-              onClick={() => { window.open('https://www.blockchain.com/btc/block/' + data.hash, '_blank') }}
             >
-              View block on blockchain.com
+              <Link url={'https://www.blockchain.com/btc/block/' + data.hash}>
+                View block on blockchain.com
+              </Link>
             </Button>
           </Grid>
         </CardActions>

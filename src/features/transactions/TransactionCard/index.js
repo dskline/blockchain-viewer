@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { withStyles } from '@material-ui/core/styles'
 
 import BlockchainApi from 'src/api/BlockchainApi'
+import Link from 'src/elements/Link'
 import { convertUnixToDateTime } from 'src/utility/datetime/DateFunctions'
 
 import type { TransactionType } from '../types'
@@ -126,9 +127,10 @@ class TransactionCard extends React.Component<Props, State> {
             <Button
               size='small'
               color='primary'
-              onClick={() => { window.open('https://www.blockchain.com/btc/tx/' + this.props.hash, '_blank') }}
             >
-              View on blockchain.com
+              <Link url={'https://www.blockchain.com/btc/tx/' + this.props.hash}>
+                View on blockchain.com
+              </Link>
             </Button>
           </Grid>
         </CardActions>
