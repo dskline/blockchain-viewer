@@ -2,6 +2,7 @@ const tableHeight = 240
 
 const styles = theme => ({
   card: {
+    maxWidth: '75vw',
     height: 400,
     display: 'flex',
     flexDirection: 'column',

@@ -5,9 +5,7 @@ export default class BaseApi {
   baseOptions: Object = {}
 
   constructor (baseUrl: string, baseOptions?: Object = {}) {
-    if (process.env.NODE_ENV !== 'development') {
-      this.baseUrl = baseUrl
-    }
+    this.baseUrl = baseUrl
     this.baseOptions = baseOptions
   }
 

@@ -12,6 +12,7 @@ import styles from './styles'
 
 type Props = {
   classes: Object,
+  inputProps: Object,
   onSubmit: (string) => void,
   placeholder: string
 }
@@ -25,16 +26,15 @@ class SearchInput extends React.Component<Props, State> {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, ...rest } = this.props
 
     return (
       <Paper className={classes.root} elevation={1}>
         <InputBase
           className={classes.input}
-          placeholder={this.props.placeholder}
-          value={this.state.inputValue}
           onChange={event => { this.setState({ inputValue: event.target.value }) }}
           onKeyPress={onEnterKeyPress(() => { this.props.onSubmit(this.state.inputValue) })}
+          {...rest}
         />
         <IconButton
           className={classes.iconButton}
